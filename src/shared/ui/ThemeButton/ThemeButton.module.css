@@ -1,0 +1,5 @@
+.wrapper {
+  max-width: 30px;
+  color: var(--text);
+  transition: 0.3 ease-in-out;
+}
