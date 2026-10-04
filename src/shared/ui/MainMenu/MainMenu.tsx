@@ -9,9 +9,6 @@ type Props = {
 
 export const MainMenu = ({ direction = 'row', size = 'sm' }: Props) => {
   const ulStyle = s.wrapper + (size === 'lg' ? ' ' + s.lgWrapper : '') + (direction === 'col' ? ' ' + s.col : '')
-  console.log(ulStyle, s.wrapper)
-
-  // const liStyles =
 
   return (
     <nav>

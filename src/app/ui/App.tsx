@@ -1,13 +1,19 @@
 import { Header } from '@/shared/ui/Header'
-import { Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import '../../index.css'
+import { Main } from '@/pages/Main/ui/Main'
+import { Paths } from '@/shared/lib'
+import { Search } from '@/pages/Search'
 
 export function App() {
   return (
     <>
       <Header />
 
-      <Routes></Routes>
+      <Routes>
+        <Route path={Paths.MAIN.path} element={<Main />} />
+        <Route path={Paths.SEARCH.path} element={<Search />} />
+      </Routes>
     </>
   )
 }
