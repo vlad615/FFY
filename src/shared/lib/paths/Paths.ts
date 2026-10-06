@@ -1,4 +1,4 @@
-export const Paths = {
+export const MenuPaths = {
   MAIN: { title: 'Main', path: '/' },
   CATEGORY: { title: 'Categories', path: '/categories' },
   FILTERED: { title: 'Filtered', path: '/filtered' },

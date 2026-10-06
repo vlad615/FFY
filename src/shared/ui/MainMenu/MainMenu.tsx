@@ -1,4 +1,4 @@
-import { Paths } from '@/shared/lib'
+import { MenuPaths } from '@/shared/lib'
 import { NavLink } from 'react-router-dom'
 import s from './MainMenu.module.css'
 
@@ -13,7 +13,7 @@ export const MainMenu = ({ direction = 'row', size = 'sm' }: Props) => {
   return (
     <nav>
       <ul className={ulStyle}>
-        {Object.values(Paths).map(({ title, path }) => (
+        {Object.values(MenuPaths).map(({ title, path }) => (
           <li key={path}>
             <NavLink to={path} className={size}>
               {title}

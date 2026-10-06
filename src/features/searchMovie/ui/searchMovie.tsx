@@ -1,6 +1,6 @@
 import { useState, type SubmitEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Paths } from '@/shared/lib'
+import { MenuPaths } from '@/shared/lib'
 import s from './SearchMovie.module.css'
 
 type Props = {
@@ -13,7 +13,7 @@ export const SearchMovie = ({ value = '' }: Props) => {
 
   const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault()
-    navigate(`${Paths.SEARCH.path}?query=${encodeURIComponent(query.trim())}`)
+    navigate(`${MenuPaths.SEARCH.path}?query=${encodeURIComponent(query.trim())}`)
   }
 
   return (
