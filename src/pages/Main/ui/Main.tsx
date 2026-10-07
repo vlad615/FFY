@@ -1,5 +1,5 @@
 import { useGetCategoryMoviesQuery } from '@/entities/Movie/api/movieApi'
-import { IMG_URL_ORIGINAL } from '@/shared/lib/constans'
+import { IMG_URL_ORIGINAL } from '@/shared/lib/constans/constans'
 import s from './Main.module.css'
 import { SearchMovie } from '@/features/searchMovie'
 import { CategoriesPaths as Paths } from '@/shared/lib'

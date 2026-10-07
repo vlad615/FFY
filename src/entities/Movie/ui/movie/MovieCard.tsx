@@ -1,8 +1,10 @@
 import { memo, useState } from 'react'
 import type { Movie } from '../../api/movie.types'
-import { IMG_URL } from '@/shared/lib/constans'
+import { IMG_URL } from '@/shared/lib/constans/constans'
 import s from './MovieCard.module.css'
 import { Icon } from '@/shared/Icons/Icon'
+import { useAppDispatch } from '@/shared/lib'
+import { addFilm, removeFilm } from '@/entities/User'
 
 type Props = {
   item: Movie
@@ -10,7 +12,17 @@ type Props = {
 
 export const MovieCard = memo(({ item }: Props) => {
   const [isLiked, setIsLiked] = useState(false)
+  const dispatch = useAppDispatch()
   const posterUrl = item.poster_path ? `${IMG_URL}${item.poster_path}` : null
+
+  const clickLike = () => {
+    setIsLiked(!isLiked)
+    if (isLiked) {
+      dispatch(removeFilm({ id: item.id }))
+    } else {
+      dispatch(addFilm({ film: { id: item.id, posterUrl: item.poster_path || '', voteAvarage: item.vote_average } }))
+    }
+  }
 
   return (
     <article className={s.card}>
@@ -28,7 +40,7 @@ export const MovieCard = memo(({ item }: Props) => {
           type="button"
           aria-label={isLiked ? `Убрать ${item.title} из избранного` : `Добавить ${item.title} в избранное`}
           aria-pressed={isLiked}
-          onClick={() => setIsLiked((liked) => !liked)}>
+          onClick={clickLike}>
           <Icon iconId="like" height="24" width="24" viewbox="0 0 24 24" fill={isLiked ? s.liked : ''} />
         </button>
       </div>
