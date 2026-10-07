@@ -1,20 +1,10 @@
 import { baseApi } from '@/shared/lib'
 import type { BaseResponseMovie, ResponseMovie } from './movie.types'
-import { url } from 'zod'
 
 const movieApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getPopularMovies: build.query<BaseResponseMovie, void>({
-      query: () => `movie/popular`,
-    }),
-    getNowPlayingMovies: build.query<ResponseMovie, void>({
-      query: () => `movie/now_playing`,
-    }),
-    getTopRatedMovies: build.query<BaseResponseMovie, void>({
-      query: () => `movie/top_rated`,
-    }),
-    getUpcomingMovies: build.query<ResponseMovie, void>({
-      query: () => `movie/upcoming`,
+    getCategoryMovies: build.query<BaseResponseMovie | ResponseMovie, string>({
+      query: (category) => `movie/${category}`,
     }),
     searchMovie: build.query<BaseResponseMovie, string>({
       query: (query) => ({
@@ -26,10 +16,4 @@ const movieApi = baseApi.injectEndpoints({
   }),
 })
 
-export const {
-  useGetPopularMoviesQuery,
-  useGetNowPlayingMoviesQuery,
-  useGetTopRatedMoviesQuery,
-  useGetUpcomingMoviesQuery,
-  useSearchMovieQuery,
-} = movieApi
+export const { useGetCategoryMoviesQuery, useSearchMovieQuery } = movieApi

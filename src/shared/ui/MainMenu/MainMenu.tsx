@@ -15,7 +15,7 @@ export const MainMenu = ({ direction = 'row', size = 'sm' }: Props) => {
       <ul className={ulStyle}>
         {Object.values(MenuPaths).map(({ title, path }) => (
           <li key={path}>
-            <NavLink to={path} className={size}>
+            <NavLink to={path} className={({ isActive }) => `${isActive ? s.activeLink : s.link}`}>
               {title}
             </NavLink>
           </li>

@@ -1,10 +1,11 @@
-import { useGetPopularMoviesQuery } from '@/entities/Movie/api/movieApi'
+import { useGetCategoryMoviesQuery } from '@/entities/Movie/api/movieApi'
 import { IMG_URL_ORIGINAL } from '@/shared/lib/constans'
 import s from './Main.module.css'
 import { SearchMovie } from '@/features/searchMovie'
+import { Paths } from '@/shared/lib'
 
 export const Main = () => {
-  const { data, isLoading } = useGetPopularMoviesQuery()
+  const { data, isLoading } = useGetCategoryMoviesQuery(Paths.POPULAR.path)
 
   const randomBg = IMG_URL_ORIGINAL + data?.results[Math.floor(Math.random() * data?.results.length)].backdrop_path
 

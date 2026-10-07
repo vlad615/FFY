@@ -1,7 +1,7 @@
-import { useSearchMovieQuery } from '@/entities/Movie'
+import { MovieCard, useSearchMovieQuery } from '@/entities/Movie'
 import { SearchMovie } from '@/features/searchMovie'
-import { ListMovies } from '@/widgets/movies/ui/ListMovies'
 import { useSearchParams } from 'react-router-dom'
+import s from './Search.module.css'
 
 export const Search = () => {
   const [searchParams] = useSearchParams()
@@ -10,17 +10,23 @@ export const Search = () => {
   const { data, isLoading, error } = useSearchMovieQuery(query, {
     skip: !query,
   })
+  const items = data?.results ?? []
 
   return (
     <section id="search-page">
       <div className="container">
         <SearchMovie value={query} />
-        <ListMovies
-          items={data?.results}
-          query={query}
-          isLoading={isLoading}
-          hasError={Boolean(error)}
-        />
+        {!query ? (
+          <p className={s.message}>Введите название для поиска</p>
+        ) : !items.length ? (
+          <p className={s.message}>По запросу «{query}» ничего не найдено</p>
+        ) : (
+          <div className={s.wrapper}>
+            {items.map((movie) => (
+              <MovieCard key={movie.id} item={movie} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )

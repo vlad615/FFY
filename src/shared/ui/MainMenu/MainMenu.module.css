@@ -10,3 +10,20 @@
 .col {
   flex-direction: column;
 }
+
+.link {
+  color: var(--text);
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    font-weight 0.2s ease;
+}
+
+.link:hover {
+  color: var(--accent);
+}
+
+.activeLink {
+  color: var(--accent);
+  font-weight: 600;
+}
