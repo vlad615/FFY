@@ -2,7 +2,7 @@ import { useGetCategoryMoviesQuery } from '@/entities/Movie/api/movieApi'
 import { IMG_URL_ORIGINAL } from '@/shared/lib/constans'
 import s from './Main.module.css'
 import { SearchMovie } from '@/features/searchMovie'
-import { Paths } from '@/shared/lib'
+import { CategoriesPaths as Paths } from '@/shared/lib'
 import { Categories } from './sections/Categories'
 
 export const Main = () => {

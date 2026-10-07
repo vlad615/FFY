@@ -6,7 +6,7 @@ export const MenuPaths = {
   FAVORITES: { title: 'Favorites', path: '/favorites' },
 }
 
-export const Paths = {
+export const CategoriesPaths = {
   POPULAR: { title: 'Popular Movies', path: 'popular' },
   TOP_RATED: { title: 'Top Rated Movies', path: 'top_rated' },
   UPCOMING: { title: 'Upcoming Movies', path: 'upcoming' },

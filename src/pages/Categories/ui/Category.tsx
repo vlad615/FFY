@@ -1,12 +1,12 @@
-import { MovieCard, useGetCategoryMoviesQuery } from '@/entities/Movie'
-import { MenuPaths, Paths } from '@/shared/lib'
+import { MovieCard, useGetCategoryMoviesQuery, type Movie } from '@/entities/Movie'
+import { MenuPaths, CategoriesPaths as Paths } from '@/shared/lib'
 import { NavLink, useParams } from 'react-router-dom'
 import s from './Category.module.css'
 
 export const Category = () => {
   const categorySlug = useParams().category
   const category = Object.values(Paths).find(({ path }) => path === categorySlug) ?? Paths.POPULAR
-  const { data, isLoading, error } = useGetCategoryMoviesQuery(category.path)
+  const { data, error } = useGetCategoryMoviesQuery(category.path)
 
   return (
     <section id="category-page">
@@ -31,7 +31,7 @@ export const Category = () => {
           </p>
         ) : (
           <div className={s.movies}>
-            {data?.results.map((movie) => (
+            {data?.results.map((movie: Movie) => (
               <MovieCard key={movie.id} item={movie} />
             ))}
           </div>

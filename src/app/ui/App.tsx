@@ -1,7 +1,7 @@
 import { Category } from '@/pages/Categories'
 import { Main } from '@/pages/Main/ui/Main'
 import { Search } from '@/pages/Search'
-import { MenuPaths, Paths } from '@/shared/lib'
+import { MenuPaths, CategoriesPaths as Paths } from '@/shared/lib'
 import { Footer } from '@/shared/ui/Footer'
 import { Header } from '@/shared/ui/Header'
 import { Navigate, Route, Routes } from 'react-router-dom'
