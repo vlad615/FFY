@@ -7,7 +7,7 @@ import { useAppDispatch } from '@/shared/lib'
 import { addFilm, removeFilm } from '@/entities/User'
 
 type Props = {
-  item: Movie
+  item: Pick<Movie, 'id' | 'poster_path' | 'vote_average' | 'title'>
 }
 
 export const MovieCard = memo(({ item }: Props) => {
@@ -20,7 +20,12 @@ export const MovieCard = memo(({ item }: Props) => {
     if (isLiked) {
       dispatch(removeFilm({ id: item.id }))
     } else {
-      dispatch(addFilm({ film: { id: item.id, posterUrl: item.poster_path || '', voteAvarage: item.vote_average } }))
+      dispatch(addFilm({
+        film: {
+          id: item.id, posterUrl: item.poster_path || '',
+          voteAvarage: item.vote_average, title: item.title
+        }
+      }))
     }
   }
 

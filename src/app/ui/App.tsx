@@ -8,6 +8,7 @@ import { Header } from '@/shared/ui/Header'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import '../../index.css'
 import s from './App.module.css'
+import { Favorites } from '@/pages/Favorites'
 
 export function App() {
   return (
@@ -16,6 +17,7 @@ export function App() {
       <Routes>
         <Route path={MenuPaths.MAIN.path} element={<Main />} />
         <Route path={MenuPaths.SEARCH.path} element={<Search />} />
+        <Route path={MenuPaths.FAVORITES.path} element={<Favorites />} />
         <Route
           path={MenuPaths.CATEGORY.path}
           element={<Navigate to={MenuPaths.CATEGORY.path + '/' + Path.POPULAR.path} />}

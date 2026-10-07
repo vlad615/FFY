@@ -5,7 +5,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState: { liked: JSON.parse(localStorage.getItem('liked') || '[]') as LikedFilm[] },
   selectors: {
-    selectUser: (state) => state.liked,
+    selectLiked: (state) => state.liked,
   },
   reducers: {
     addFilm: (state, action: PayloadAction<{ film: LikedFilm }>) => {
@@ -20,7 +20,7 @@ export const userSlice = createSlice({
   },
 })
 
-export const { selectUser } = userSlice.selectors
+export const { selectLiked } = userSlice.selectors
 export const { addFilm, removeFilm } = userSlice.actions
 
 export const userReducer = userSlice.reducer
