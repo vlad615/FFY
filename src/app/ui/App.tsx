@@ -4,7 +4,7 @@ import '../../index.css'
 import { Main } from '@/pages/Main/ui/Main'
 import { MenuPaths, Paths } from '@/shared/lib'
 import { Search } from '@/pages/Search'
-import { Category } from '@/pages/Filtered'
+import { Category } from '@/pages/Categories'
 
 export function App() {
   return (

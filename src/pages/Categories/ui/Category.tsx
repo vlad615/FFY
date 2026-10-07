@@ -11,7 +11,7 @@ export const Category = () => {
   return (
     <section id="category-page">
       <div className="container">
-        <nav aria-label="Категории фильмов">
+        <nav aria-label="Films categories">
           <ul className={s.categories}>
             {Object.values(Paths).map(({ title, path }) => (
               <li key={path}>

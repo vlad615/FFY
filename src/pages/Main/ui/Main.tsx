@@ -3,6 +3,7 @@ import { IMG_URL_ORIGINAL } from '@/shared/lib/constans'
 import s from './Main.module.css'
 import { SearchMovie } from '@/features/searchMovie'
 import { Paths } from '@/shared/lib'
+import { Categories } from './sections/Categories'
 
 export const Main = () => {
   const { data, isLoading } = useGetCategoryMoviesQuery(Paths.POPULAR.path)
@@ -23,6 +24,9 @@ export const Main = () => {
           <SearchMovie />
         </div>
       </section>
+      {Object.values(Paths).map(({ title, path }) => (
+        <Categories key={path} title={title} path={path} />
+      ))}
     </section>
   )
 }

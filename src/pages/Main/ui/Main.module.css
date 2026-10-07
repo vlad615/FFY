@@ -3,6 +3,7 @@
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
+  margin-bottom: 50px;
   height: 700px;
   display: flex;
   align-items: center;
