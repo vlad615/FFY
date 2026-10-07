@@ -6,7 +6,7 @@ import { ThemeButton } from '../ThemeButton'
 
 export const Header = () => {
   return (
-    <header>
+    <header className={s.header}>
       <div className="container">
         <div className={s.wrapper}>
           <NavLink to="/">

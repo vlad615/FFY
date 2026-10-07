@@ -1,14 +1,16 @@
 import { Header } from '@/shared/ui/Header'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import '../../index.css'
+import s from './App.module.css'
 import { Main } from '@/pages/Main/ui/Main'
 import { MenuPaths, Paths } from '@/shared/lib'
 import { Search } from '@/pages/Search'
 import { Category } from '@/pages/Categories'
+import { Footer } from '@/shared/ui/Footer'
 
 export function App() {
   return (
-    <>
+    <section className={s.body}>
       <Header />
       <Routes>
         <Route path={MenuPaths.MAIN.path} element={<Main />} />
@@ -19,6 +21,7 @@ export function App() {
         />
         <Route path={MenuPaths.CATEGORY.path + '/:category'} element={<Category />} />
       </Routes>
-    </>
+      <Footer />
+    </section>
   )
 }
