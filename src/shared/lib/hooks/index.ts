@@ -1,3 +1,4 @@
 export { useAppSelector } from './useAppSelector'
 export { useAppDispatch } from './useAppDispatch'
 export { ScrollToTop } from './ScrollToTop'
+export { useGlobalLoading } from './useGlobalLoading'
