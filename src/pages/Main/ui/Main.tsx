@@ -6,7 +6,7 @@ import { Paths } from '@/shared/lib'
 import { Categories } from './sections/Categories'
 
 export const Main = () => {
-  const { data, isLoading } = useGetCategoryMoviesQuery(Paths.POPULAR.path)
+  const { data } = useGetCategoryMoviesQuery(Paths.POPULAR.path)
 
   const randomBg = IMG_URL_ORIGINAL + data?.results[Math.floor(Math.random() * data?.results.length)].backdrop_path
 

@@ -6,12 +6,14 @@ import { App } from '@/app/ui/App'
 import { store } from './app/lib/store'
 import { ThemeProvider } from './app/providers'
 import { BrowserRouter } from 'react-router-dom'
+import { ScrollToTop } from './shared/lib/hooks'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
       <ThemeProvider>
         <BrowserRouter>
+          <ScrollToTop />
           <App />
         </BrowserRouter>
       </ThemeProvider>

@@ -9,7 +9,7 @@ type Props = {
 }
 
 export const Categories = ({ title, path }: Props) => {
-  const { data, isLoading, error } = useGetCategoryMoviesQuery(path)
+  const { data, error } = useGetCategoryMoviesQuery(path)
   const movies = data?.results ?? []
 
   return (
