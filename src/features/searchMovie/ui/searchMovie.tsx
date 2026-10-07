@@ -1,5 +1,5 @@
 import { useState, type SubmitEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { MenuPaths } from '@/shared/lib'
 import s from './SearchMovie.module.css'
 
@@ -8,8 +8,18 @@ type Props = {
 }
 
 export const SearchMovie = ({ value = '' }: Props) => {
+  const [searchParams] = useSearchParams()
   const [query, setQuery] = useState(value)
   const navigate = useNavigate()
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setQuery(value)
+
+    if (value === '' && searchParams.get('query')?.trim()) {
+      navigate(`${MenuPaths.SEARCH.path}`)
+    }
+  }
 
   const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -25,7 +35,7 @@ export const SearchMovie = ({ value = '' }: Props) => {
         placeholder="Название фильма"
         aria-label="Название фильма"
         value={query}
-        onChange={(event) => setQuery(event.target.value)}
+        onChange={(event) => handleChange(event)}
       />
       <button className={s.searchButton} type="submit" disabled={!query.trim()}>
         Искать

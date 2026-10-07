@@ -15,18 +15,20 @@ export const Search = () => {
   return (
     <section id="search-page">
       <div className="container">
-        <SearchMovie value={query} />
-        {!query ? (
-          <p className={s.message}>Введите название для поиска</p>
-        ) : !items.length ? (
-          <p className={s.message}>По запросу «{query}» ничего не найдено</p>
-        ) : (
-          <div className={s.wrapper}>
-            {items.map((movie) => (
-              <MovieCard key={movie.id} item={movie} />
-            ))}
-          </div>
-        )}
+        <div className={s.wrapper}>
+          <SearchMovie value={query} />
+          {!query ? (
+            <p className={s.message}>Enter a movie title to start searching</p>
+          ) : !items.length ? (
+            <p className={s.message}>No matches found for «{query}»</p>
+          ) : (
+            <div className={s.wrapperCards}>
+              {items.map((movie) => (
+                <MovieCard key={movie.id} item={movie} />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </section>
   )
