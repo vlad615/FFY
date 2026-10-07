@@ -12,3 +12,7 @@ export const CategoriesPaths = {
   UPCOMING: { title: 'Upcoming Movies', path: 'upcoming' },
   NOW_PLAY: { title: 'Now Playing Movies', path: 'now_playing' },
 }
+
+export const Paths = {
+  NOT_FOUND: { title: 'Page not found', path: '/404error' },
+}
