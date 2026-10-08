@@ -9,7 +9,7 @@ import {
 } from './movie.types'
 import { ZodError } from 'zod'
 
-const movieApi = baseApi.injectEndpoints({
+export const movieApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getCategoryMovies: build.query<MovieListResponse, string>({
       query: (category) => `movie/${category}`,
