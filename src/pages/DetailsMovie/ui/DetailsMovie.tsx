@@ -2,7 +2,7 @@ import { getDuration, getGenres, useGetByIdQuery } from '@/entities/Movie'
 import { IMG_URL } from '@/shared/lib'
 import s from './DetailsMovie.module.css'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Casts } from '@/widgets'
+import { Casts, SimilarFilms } from '@/widgets'
 
 export const DetailsMovie = () => {
   const navigate = useNavigate()
@@ -63,9 +63,10 @@ export const DetailsMovie = () => {
               </div>
             </div>
           </div>
-          <Casts />
         </div>
       </section>
+      <Casts />
+      <SimilarFilms />
     </>
   )
 }

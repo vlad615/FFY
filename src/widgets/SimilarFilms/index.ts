@@ -1,0 +1,1 @@
+export { SimilarFilms } from './ui/SimilarFilms'

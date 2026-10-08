@@ -12,6 +12,12 @@ const movieApi = baseApi.injectEndpoints({
         method: 'GET',
       }),
     }),
+    getSimilarFilms: build.query<BaseResponseMovie, string>({
+      query: (id) => ({
+        url: `movie/${id}/similar`,
+        method: 'GET',
+      }),
+    }),
     searchMovie: build.query<BaseResponseMovie, string>({
       query: (query) => ({
         url: 'search/movie',
@@ -22,4 +28,4 @@ const movieApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { useGetCategoryMoviesQuery, useGetByIdQuery, useSearchMovieQuery } = movieApi
+export const { useGetCategoryMoviesQuery, useGetSimilarFilmsQuery, useGetByIdQuery, useSearchMovieQuery } = movieApi
