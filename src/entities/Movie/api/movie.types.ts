@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 const MovieSchema = z.object({
   adult: z.boolean(),
-  backdrop_path: z.string(),
+  backdrop_path: z.string().nullable(),
   genre_ids: z.number().array(),
   id: z.number(),
   original_language: z.string(),
@@ -47,7 +47,7 @@ const SpokenLanguageSchema = z.object({
   name: z.string(),
 })
 
-export const MovieDetailsSchema = MovieSchema.extend({
+export const MovieDetailsSchema = MovieSchema.omit({ genre_ids: true }).extend({
   belongs_to_collection: InfoSchema.nullable(),
   budget: z.number(),
   genres: GenreSchema.array(),

@@ -7,6 +7,7 @@ import {
   type MovieDetails,
   type MovieListResponse,
 } from './movie.types'
+import { ZodError } from 'zod'
 
 const movieApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -19,14 +20,34 @@ const movieApi = baseApi.injectEndpoints({
         url: `movie/${id}`,
         method: 'GET',
       }),
-      transformResponse: (response) => MovieDetailsSchema.parse(response),
+      transformResponse: (response: unknown) => {
+        try {
+          return MovieDetailsSchema.parse(response)
+        } catch (error) {
+          if (error instanceof ZodError) {
+            console.error('Ошибка валидации MovieDetails:', error.issues)
+          }
+
+          throw error
+        }
+      },
     }),
     getSimilarFilms: build.query<BaseResponseMovie, string>({
       query: (id) => ({
         url: `movie/${id}/similar`,
         method: 'GET',
       }),
-      transformResponse: (response) => BaseResponseMovieSchema.parse(response),
+      transformResponse: (response: unknown) => {
+        try {
+          return BaseResponseMovieSchema.parse(response)
+        } catch (error) {
+          if (error instanceof ZodError) {
+            console.error('Ошибка валидации MovieDetails:', error.issues)
+          }
+
+          throw error
+        }
+      },
     }),
     searchMovie: build.query<BaseResponseMovie, string>({
       query: (query) => ({
