@@ -1,6 +1,6 @@
 export type LikedFilm = {
   id: number
   title: string
-  posterUrl: string
-  voteAvarage: number
+  poster_path: string
+  vote_average: number
 }

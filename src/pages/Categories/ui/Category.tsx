@@ -2,6 +2,7 @@ import { MovieCard, useGetCategoryMoviesQuery, type Movie } from '@/entities/Mov
 import { MenuPaths, CategoriesPaths as Paths } from '@/shared/lib'
 import { NavLink, useParams } from 'react-router-dom'
 import s from './Category.module.css'
+import { ListMovies } from '@/widgets'
 
 export const Category = () => {
   const categorySlug = useParams().category
@@ -30,11 +31,7 @@ export const Category = () => {
             Не удалось загрузить фильмы. Попробуйте еще раз.
           </p>
         ) : (
-          <div className={s.movies}>
-            {data?.results.map((movie: Movie) => (
-              <MovieCard key={movie.id} item={movie} />
-            ))}
-          </div>
+          <ListMovies items={data?.results} />
         )}
       </div>
     </section>

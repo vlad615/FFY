@@ -25,10 +25,8 @@ export const MovieCard = memo(({ item }: Props) => {
       dispatch(
         addFilm({
           film: {
-            id: item.id,
-            posterUrl: item.poster_path || '',
-            voteAvarage: item.vote_average,
-            title: item.title,
+            ...item,
+            poster_path: item.poster_path || '',
           },
         })
       )
