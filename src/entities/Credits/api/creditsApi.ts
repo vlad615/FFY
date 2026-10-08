@@ -1,5 +1,5 @@
 import { baseApi } from '@/shared/lib'
-import type { Credits } from './credits.type'
+import { creditsShema, type Credits } from './credits.type'
 
 const creditsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -8,6 +8,7 @@ const creditsApi = baseApi.injectEndpoints({
         url: `movie/${id}/credits`,
         method: 'GET',
       }),
+      transformResponse: (response: unknown) => creditsShema.parse(response),
     }),
   }),
 })
