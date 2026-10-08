@@ -1,12 +1,12 @@
-import { MovieCard, useGetCategoryMoviesQuery, type Movie } from '@/entities/Movie'
-import { MenuPaths, CategoriesPaths as Paths } from '@/shared/lib'
+import { useGetCategoryMoviesQuery } from '@/entities/Movie'
+import { CategoriesPaths as Path, Paths } from '@/shared/lib'
+import { ListMovies } from '@/widgets'
 import { NavLink, useParams } from 'react-router-dom'
 import s from './Category.module.css'
-import { ListMovies } from '@/widgets'
 
 export const Category = () => {
   const categorySlug = useParams().category
-  const category = Object.values(Paths).find(({ path }) => path === categorySlug) ?? Paths.POPULAR
+  const category = Object.values(Path).find(({ path }) => path === categorySlug) ?? Path.POPULAR
   const { data, error } = useGetCategoryMoviesQuery(category.path)
 
   return (
@@ -14,10 +14,10 @@ export const Category = () => {
       <div className="container">
         <nav aria-label="Films categories">
           <ul className={s.categories}>
-            {Object.values(Paths).map(({ title, path }) => (
+            {Object.values(Path).map(({ title, path }) => (
               <li key={path}>
                 <NavLink
-                  to={`${MenuPaths.CATEGORY.path}/${path}`}
+                  to={`${Paths.MOVIES.path}/${path}`}
                   className={({ isActive }) => (isActive ? s.activeLink : undefined)}>
                   {title}
                 </NavLink>

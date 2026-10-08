@@ -17,6 +17,52 @@ const MovieSchema = z.object({
   vote_count: z.number(),
 })
 
+const GenreSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+})
+
+const InfoSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  poster_path: z.string().nullable(),
+  backdrop_path: z.string().nullable(),
+})
+
+const ProductionCompanySchema = z.object({
+  id: z.number(),
+  logo_path: z.string().nullable(),
+  name: z.string(),
+  origin_country: z.string(),
+})
+
+const ProductionCountrySchema = z.object({
+  iso_3166_1: z.string(),
+  name: z.string(),
+})
+
+const SpokenLanguageSchema = z.object({
+  english_name: z.string(),
+  iso_639_1: z.string(),
+  name: z.string(),
+})
+
+const MovieDetailsSchema = MovieSchema.extend({
+  belongs_to_collection: InfoSchema.nullable(),
+  budget: z.number(),
+  genres: GenreSchema.array(),
+  homepage: z.string().nullable(),
+  imdb_id: z.string().nullable(),
+  origin_country: z.string().array(),
+  production_companies: ProductionCompanySchema.array(),
+  production_countries: ProductionCountrySchema.array(),
+  revenue: z.number(),
+  runtime: z.number().nullable(),
+  spoken_languages: SpokenLanguageSchema.array(),
+  status: z.string(),
+  tagline: z.string().nullable(),
+})
+
 const BaseResponseMovieSchema = z.object({
   page: z.number(),
   results: MovieSchema.array(),
@@ -32,5 +78,6 @@ const ResponseMovieSchema = BaseResponseMovieSchema.extend({
 })
 
 export type Movie = z.infer<typeof MovieSchema>
+export type MovieDetails = z.infer<typeof MovieDetailsSchema>
 export type BaseResponseMovie = z.infer<typeof BaseResponseMovieSchema>
 export type ResponseMovie = z.infer<typeof ResponseMovieSchema>

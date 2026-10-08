@@ -1,10 +1,16 @@
 import { baseApi } from '@/shared/lib'
-import type { BaseResponseMovie, ResponseMovie } from './movie.types'
+import type { BaseResponseMovie, MovieDetails, ResponseMovie } from './movie.types'
 
 const movieApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getCategoryMovies: build.query<BaseResponseMovie | ResponseMovie, string>({
       query: (category) => `movie/${category}`,
+    }),
+    getById: build.query<MovieDetails, string>({
+      query: (id) => ({
+        url: `movie/${id}`,
+        method: 'GET',
+      }),
     }),
     searchMovie: build.query<BaseResponseMovie, string>({
       query: (query) => ({
@@ -16,4 +22,4 @@ const movieApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { useGetCategoryMoviesQuery, useSearchMovieQuery } = movieApi
+export const { useGetCategoryMoviesQuery, useGetByIdQuery, useSearchMovieQuery } = movieApi

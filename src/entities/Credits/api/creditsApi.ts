@@ -3,7 +3,7 @@ import type { Credits } from './credits.type'
 
 const creditsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getCredits: build.query<Credits, string>({
+    getCredits: build.query<Credits, number>({
       query: (id) => ({
         url: `movie/${id}/credits`,
         method: 'POST',

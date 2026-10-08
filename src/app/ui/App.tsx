@@ -2,7 +2,7 @@ import { Category } from '@/pages/Categories'
 import { Main } from '@/pages/Main/ui/Main'
 import { NotFound } from '@/pages/NotFound'
 import { Search } from '@/pages/Search'
-import { MenuPaths, CategoriesPaths as Path, useGlobalLoading } from '@/shared/lib'
+import { MenuPaths, Paths, useGlobalLoading } from '@/shared/lib'
 import { Footer } from '@/shared/ui/Footer'
 import { Header } from '@/shared/ui/Header'
 import { Navigate, Route, Routes } from 'react-router-dom'
@@ -12,9 +12,7 @@ import { Favorites } from '@/pages/Favorites'
 import { LinerProgress } from '@/shared/ui/LinerProgress'
 
 export function App() {
-  const isLoading = useGlobalLoading(
-
-  )
+  const isLoading = useGlobalLoading()
   return (
     <section className={s.body}>
       <Header />
@@ -23,13 +21,10 @@ export function App() {
         <Route path={MenuPaths.MAIN.path} element={<Main />} />
         <Route path={MenuPaths.SEARCH.path} element={<Search />} />
         <Route path={MenuPaths.FAVORITES.path} element={<Favorites />} />
-        <Route
-          path={MenuPaths.CATEGORY.path}
-          element={<Navigate to={MenuPaths.CATEGORY.path + '/' + Path.POPULAR.path} />}
-        />
-        <Route path={MenuPaths.CATEGORY.path + '/:category'} element={<Category />} />
+        <Route path={MenuPaths.CATEGORY.path} element={<Category />} />
+        <Route path={Paths.MOVIES.path + '/:category'} element={<Category />} />
 
-        <Route path='*' element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </section>

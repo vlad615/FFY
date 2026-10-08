@@ -5,6 +5,7 @@ import s from './MovieCard.module.css'
 import { Icon } from '@/shared/Icons/Icon'
 import { useAppDispatch, useAppSelector } from '@/shared/lib'
 import { addFilm, removeFilm, selectLiked } from '@/entities/User'
+import { useNavigate } from 'react-router-dom'
 
 type Props = {
   item: Pick<Movie, 'id' | 'poster_path' | 'vote_average' | 'title'>
@@ -13,11 +14,13 @@ type Props = {
 export const MovieCard = memo(({ item }: Props) => {
   const dispatch = useAppDispatch()
   const liked = useAppSelector(selectLiked)
+  const navigate = useNavigate()
   const posterUrl = item.poster_path ? `${IMG_URL}${item.poster_path}` : null
   const like = liked.find((film) => film.id === item.id) || 0
   const [isLiked, setIsLiked] = useState(like ? true : false)
 
-  const clickLike = () => {
+  const clickLike = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation()
     setIsLiked(!isLiked)
     if (isLiked) {
       dispatch(removeFilm({ id: item.id }))
@@ -34,7 +37,7 @@ export const MovieCard = memo(({ item }: Props) => {
   }
 
   return (
-    <article className={s.card}>
+    <article className={s.card} onClick={() => navigate(`movie/${item.id}`)}>
       <div className={s.poster}>
         {posterUrl ? (
           <img className={s.image} src={posterUrl} alt={`${item.title} — poster`} />
@@ -49,7 +52,7 @@ export const MovieCard = memo(({ item }: Props) => {
           type="button"
           aria-label={isLiked ? `Убрать ${item.title} из избранного` : `Добавить ${item.title} в избранное`}
           aria-pressed={isLiked}
-          onClick={clickLike}>
+          onClick={(e) => clickLike(e)}>
           <Icon iconId="like" height="24" width="24" viewbox="0 0 24 24" fill={isLiked ? s.liked : ''} />
         </button>
       </div>

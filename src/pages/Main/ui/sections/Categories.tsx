@@ -1,5 +1,5 @@
 import { MovieCard, useGetCategoryMoviesQuery } from '@/entities/Movie'
-import { MenuPaths } from '@/shared/lib'
+import { Paths } from '@/shared/lib'
 import { NavLink } from 'react-router-dom'
 import s from './Categories.module.css'
 
@@ -16,7 +16,7 @@ export const Categories = ({ title, path }: Props) => {
     <section id={path} className={s.section}>
       <div className={s.header}>
         <h2 className={s.title}>{title}</h2>
-        <NavLink className={s.moreLink} to={`${MenuPaths.CATEGORY.path}/${path}`}>
+        <NavLink className={s.moreLink} to={`${Paths.MOVIES.path}/${path}`}>
           Show more
         </NavLink>
       </div>
