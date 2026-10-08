@@ -8,7 +8,7 @@ const movieApi = baseApi.injectEndpoints({
     }),
     getById: build.query<MovieDetails, string>({
       query: (id) => ({
-        url: `movie/${id}`,
+        url: `movie1/${id}`,
         method: 'GET',
       }),
     }),

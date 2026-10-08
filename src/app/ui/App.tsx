@@ -1,4 +1,5 @@
 import { Category } from '@/pages/Categories'
+import { DetailsMovie } from '@/pages/DetailsMovie'
 import { Favorites } from '@/pages/Favorites'
 import { Main } from '@/pages/Main/ui/Main'
 import { NotFound } from '@/pages/NotFound'
@@ -8,16 +9,18 @@ import { Footer } from '@/shared/ui/Footer'
 import { Header } from '@/shared/ui/Header'
 import { LinerProgress } from '@/shared/ui/LinerProgress'
 import { Route, Routes } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 import '../../index.css'
 import s from './App.module.css'
-import { DetailsMovie } from '@/pages/DetailsMovie'
 
 export function App() {
   const isLoading = useGlobalLoading()
+
   return (
     <section className={s.body}>
       <Header />
       {isLoading && <LinerProgress />}
+
       <Routes>
         <Route path={MenuPaths.MAIN.path} element={<Main />} />
         <Route path={MenuPaths.SEARCH.path} element={<Search />} />
@@ -27,7 +30,9 @@ export function App() {
 
         <Route path="*" element={<NotFound />} />
       </Routes>
+
       <Footer />
+      <ToastContainer />
     </section>
   )
 }
