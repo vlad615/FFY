@@ -3,15 +3,17 @@ import type { Movie } from '../../api/movie.types'
 import { IMG_URL } from '@/shared/lib/constans/constans'
 import s from './MovieCard.module.css'
 import { Icon } from '@/shared/Icons/Icon'
-import { useAppDispatch } from '@/shared/lib'
-import { addFilm, removeFilm } from '@/entities/User'
+import { useAppDispatch, useAppSelector } from '@/shared/lib'
+import { addFilm, removeFilm, selectLiked } from '@/entities/User'
 
 type Props = {
   item: Pick<Movie, 'id' | 'poster_path' | 'vote_average' | 'title'>
 }
 
 export const MovieCard = memo(({ item }: Props) => {
-  const [isLiked, setIsLiked] = useState(false)
+  const liked = useAppSelector(selectLiked)
+  const like = liked.find((film) => film.id === item.id) || 0
+  const [isLiked, setIsLiked] = useState(like ? true : false)
   const dispatch = useAppDispatch()
   const posterUrl = item.poster_path ? `${IMG_URL}${item.poster_path}` : null
 
@@ -20,12 +22,16 @@ export const MovieCard = memo(({ item }: Props) => {
     if (isLiked) {
       dispatch(removeFilm({ id: item.id }))
     } else {
-      dispatch(addFilm({
-        film: {
-          id: item.id, posterUrl: item.poster_path || '',
-          voteAvarage: item.vote_average, title: item.title
-        }
-      }))
+      dispatch(
+        addFilm({
+          film: {
+            id: item.id,
+            posterUrl: item.poster_path || '',
+            voteAvarage: item.vote_average,
+            title: item.title,
+          },
+        })
+      )
     }
   }
 
