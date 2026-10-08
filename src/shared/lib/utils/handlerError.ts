@@ -1,6 +1,6 @@
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query/react'
 import { toast } from 'react-toastify'
-import { isErrorWithDetailArray, isErrorWithProperty, trimToMaxLength } from './isErrorWithMessage'
+import { isErrorWithMessage } from './isErrorWithMessage'
 
 export const handleErrors = (error: FetchBaseQueryError) => {
   if (error) {
@@ -12,17 +12,8 @@ export const handleErrors = (error: FetchBaseQueryError) => {
         toast(error.error, { type: 'error', theme: 'colored' })
         break
 
-      case 400:
-      case 403:
-        if (isErrorWithDetailArray(error.data)) {
-          toast(trimToMaxLength(error.data.errors[0].detail), { type: 'error', theme: 'colored' })
-        } else {
-          toast(JSON.stringify(error.data), { type: 'error', theme: 'colored' })
-        }
-        break
-
       case 404:
-        if (isErrorWithProperty(error.data, 'status_message')) {
+        if (isErrorWithMessage(error.data, 'status_message')) {
           toast(error.data.status_message, { type: 'error', theme: 'colored' })
         } else {
           toast(JSON.stringify(error.data), { type: 'error', theme: 'colored' })
@@ -31,7 +22,7 @@ export const handleErrors = (error: FetchBaseQueryError) => {
 
       case 401:
       case 429:
-        if (isErrorWithProperty(error.data, 'status_message')) {
+        if (isErrorWithMessage(error.data, 'status_message')) {
           toast(error.data.status_message, { type: 'error', theme: 'colored' })
         } else {
           toast(JSON.stringify(error.data), { type: 'error', theme: 'colored' })
