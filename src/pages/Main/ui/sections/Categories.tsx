@@ -2,6 +2,7 @@ import { MovieCard, useGetCategoryMoviesQuery } from '@/entities/Movie'
 import { Paths } from '@/shared/lib'
 import { NavLink } from 'react-router-dom'
 import s from './Categories.module.css'
+import { ListMovieSceleton } from '@/widgets'
 
 type Props = {
   title: string
@@ -9,8 +10,12 @@ type Props = {
 }
 
 export const Categories = ({ title, path }: Props) => {
-  const { data, error } = useGetCategoryMoviesQuery(path)
+  const { data, error, isLoading } = useGetCategoryMoviesQuery(path)
   const movies = data?.results ?? []
+
+  if (isLoading) {
+    return <ListMovieSceleton rows={1} columns={6} />
+  }
 
   return (
     <section id={path} className={s.section}>

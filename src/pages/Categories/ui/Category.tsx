@@ -1,13 +1,17 @@
 import { useGetCategoryMoviesQuery } from '@/entities/Movie'
 import { CategoriesPaths as Path, Paths } from '@/shared/lib'
-import { ListMovies } from '@/widgets'
+import { ListMovies, ListMovieSceleton } from '@/widgets'
 import { NavLink, useParams } from 'react-router-dom'
 import s from './Category.module.css'
 
 export const Category = () => {
   const categorySlug = useParams().category
   const category = Object.values(Path).find(({ path }) => path === categorySlug) ?? Path.POPULAR
-  const { data, error } = useGetCategoryMoviesQuery(category.path)
+  const { data, error, isLoading } = useGetCategoryMoviesQuery(category.path)
+
+  if (isLoading) {
+    return <ListMovieSceleton rows={5} />
+  }
 
   return (
     <section id="category-page">

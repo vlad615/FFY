@@ -1,0 +1,84 @@
+.list {
+  --columns: 5;
+
+  display: grid;
+  grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+  gap: clamp(8px, 2vw, 15px);
+  margin: 32px 0 100px;
+}
+
+.card {
+  min-width: 0;
+}
+
+.poster,
+.title,
+.subtitle {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--border);
+}
+
+.poster {
+  aspect-ratio: 2 / 3;
+  border-radius: 10px;
+}
+
+.title,
+.subtitle {
+  height: 16px;
+  margin-top: 10px;
+}
+
+.subtitle {
+  width: 65%;
+  height: 12px;
+  margin-top: 8px;
+}
+
+.poster::after,
+.title::after,
+.subtitle::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 25%), transparent);
+  content: '';
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@media (max-width: 1100px) {
+  .movies {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .movies {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 400px) {
+  .movies {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poster::after,
+  .title::after,
+  .subtitle::after {
+    animation: none;
+  }
+}
