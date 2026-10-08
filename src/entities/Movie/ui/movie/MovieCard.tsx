@@ -11,11 +11,11 @@ type Props = {
 }
 
 export const MovieCard = memo(({ item }: Props) => {
+  const dispatch = useAppDispatch()
   const liked = useAppSelector(selectLiked)
+  const posterUrl = item.poster_path ? `${IMG_URL}${item.poster_path}` : null
   const like = liked.find((film) => film.id === item.id) || 0
   const [isLiked, setIsLiked] = useState(like ? true : false)
-  const dispatch = useAppDispatch()
-  const posterUrl = item.poster_path ? `${IMG_URL}${item.poster_path}` : null
 
   const clickLike = () => {
     setIsLiked(!isLiked)
