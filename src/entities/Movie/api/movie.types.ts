@@ -47,7 +47,7 @@ const SpokenLanguageSchema = z.object({
   name: z.string(),
 })
 
-const MovieDetailsSchema = MovieSchema.extend({
+export const MovieDetailsSchema = MovieSchema.extend({
   belongs_to_collection: InfoSchema.nullable(),
   budget: z.number(),
   genres: GenreSchema.array(),
@@ -63,21 +63,24 @@ const MovieDetailsSchema = MovieSchema.extend({
   tagline: z.string().nullable(),
 })
 
-const BaseResponseMovieSchema = z.object({
+export const BaseResponseMovieSchema = z.object({
   page: z.number(),
   results: MovieSchema.array(),
   total_pages: z.number(),
   total_results: z.number(),
 })
 
-const ResponseMovieSchema = BaseResponseMovieSchema.extend({
+export const ResponseMovieSchema = BaseResponseMovieSchema.extend({
   dates: z.object({
     maximum: z.string(),
     minimum: z.string(),
   }),
 })
 
+export const MovieListResponseSchema = z.union([ResponseMovieSchema, BaseResponseMovieSchema])
+
+export type MovieListResponse = z.infer<typeof MovieListResponseSchema>
+
 export type Movie = z.infer<typeof MovieSchema>
 export type MovieDetails = z.infer<typeof MovieDetailsSchema>
 export type BaseResponseMovie = z.infer<typeof BaseResponseMovieSchema>
-export type ResponseMovie = z.infer<typeof ResponseMovieSchema>
