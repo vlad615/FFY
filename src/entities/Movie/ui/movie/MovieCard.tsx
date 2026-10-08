@@ -3,7 +3,7 @@ import type { Movie } from '../../api/movie.types'
 import { IMG_URL } from '@/shared/lib/constans/constans'
 import s from './MovieCard.module.css'
 import { Icon } from '@/shared/Icons/Icon'
-import { useAppDispatch, useAppSelector } from '@/shared/lib'
+import { Paths, useAppDispatch, useAppSelector } from '@/shared/lib'
 import { addFilm, removeFilm, selectLiked } from '@/entities/User'
 import { useNavigate } from 'react-router-dom'
 
@@ -37,7 +37,7 @@ export const MovieCard = memo(({ item }: Props) => {
   }
 
   return (
-    <article className={s.card} onClick={() => navigate(`movie/${item.id}`)}>
+    <article className={s.card} onClick={() => navigate(`${Paths.MOVIE.path}/${item.id}`)}>
       <div className={s.poster}>
         {posterUrl ? (
           <img className={s.image} src={posterUrl} alt={`${item.title} — poster`} />

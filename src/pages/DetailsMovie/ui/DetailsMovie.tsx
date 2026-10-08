@@ -1,13 +1,15 @@
 import { getDuration, getGenres, useGetByIdQuery } from '@/entities/Movie'
 import { IMG_URL } from '@/shared/lib'
 import s from './DetailsMovie.module.css'
+import { useNavigate, useParams } from 'react-router-dom'
+import { Casts } from '@/widgets'
 
-type Props = {
-  id: string
-}
-
-export const DetailsMovie = ({ id }: Props) => {
-  const { data: movie } = useGetByIdQuery(id)
+export const DetailsMovie = () => {
+  const navigate = useNavigate()
+  const id = useParams().id || ''
+  const { data: movie } = useGetByIdQuery(id, {
+    skip: !id,
+  })
 
   if (!movie) {
     return null
@@ -18,46 +20,52 @@ export const DetailsMovie = ({ id }: Props) => {
   const posterUrl = movie.poster_path ? `${IMG_URL}${movie.poster_path}` : null
 
   return (
-    <section className={s.section} id={`details-movie-${movie.id}`}>
-      <div className="container">
-        <div className={s.wrapper}>
-          <div className={s.posterBlock}>
-            {posterUrl ? (
-              <img className={s.image} src={posterUrl} alt={`${movie.title} — poster`} />
-            ) : (
-              <div className={s.noPoster}>No poster</div>
-            )}
-          </div>
-
-          <div className={s.content}>
-            <h1 className={s.title}>{movie.title}</h1>
-
-            <div className={s.infoList}>
-              <div className={s.infoItem}>
-                <span className={s.label}>Год выпуска</span>
-                <strong>{releaseYear}</strong>
-              </div>
-              <div className={s.infoItem}>
-                <span className={s.label}>Рейтинг</span>
-                <strong>★ {rating}</strong>
-              </div>
-              <div className={s.infoItem}>
-                <span className={s.label}>Жанры</span>
-                <strong>{getGenres(movie)}</strong>
-              </div>
-              <div className={s.infoItem}>
-                <span className={s.label}>Продолжительность</span>
-                <strong>{getDuration(movie.runtime)}</strong>
-              </div>
+    <>
+      <section id={`details-movie-${movie.id}`}>
+        <div className="container">
+          <button className={s.backButton} type="button" onClick={() => navigate(-1)}>
+            Go Back
+          </button>
+          <div className={s.wrapper}>
+            <div className={s.posterBlock}>
+              {posterUrl ? (
+                <img className={s.image} src={posterUrl} alt={`${movie.title} — poster`} />
+              ) : (
+                <div className={s.noPoster}>No poster</div>
+              )}
             </div>
 
-            <div className={s.descriptionBlock}>
-              <h2 className={s.subtitle}>Описание</h2>
-              <p className={s.description}>{movie.overview || 'Описание фильма отсутствует.'}</p>
+            <div className={s.content}>
+              <h1 className={s.title}>{movie.title}</h1>
+
+              <div className={s.infoList}>
+                <div className={s.infoItem}>
+                  <span className={s.label}>Release year</span>
+                  <strong>{releaseYear}</strong>
+                </div>
+                <div className={s.infoItem}>
+                  <span className={s.label}>Rating</span>
+                  <strong>★ {rating}</strong>
+                </div>
+                <div className={s.infoItem}>
+                  <span className={s.label}>Genres</span>
+                  <strong>{getGenres(movie)}</strong>
+                </div>
+                <div className={s.infoItem}>
+                  <span className={s.label}>Runtime</span>
+                  <strong>{getDuration(movie.runtime)}</strong>
+                </div>
+              </div>
+
+              <div className={s.descriptionBlock}>
+                <h2 className={s.subtitle}>Overview</h2>
+                <p className={s.description}>{movie.overview || 'No overview available.'}</p>
+              </div>
             </div>
           </div>
+          <Casts />
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }
