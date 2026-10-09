@@ -11,14 +11,15 @@ import { ZodError } from 'zod'
 
 export const movieApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getCategoryMovies: build.query<MovieListResponse, string>({
-      query: (category) => `movie/${category}`,
+    getCategoryMovies: build.query<MovieListResponse, { category: string; page: number }>({
+      query: ({ category, page }) => ({ url: `movie/${category}`, params: { page } }),
       transformResponse: (response: unknown) => MovieListResponseSchema.parse(response),
     }),
-    getById: build.query<MovieDetails, string>({
-      query: (id) => ({
+    getById: build.query<MovieDetails, { id: string; page: number }>({
+      query: ({ id, page }) => ({
         url: `movie/${id}`,
         method: 'GET',
+        params: { page },
       }),
       transformResponse: (response: unknown) => {
         try {
@@ -32,10 +33,11 @@ export const movieApi = baseApi.injectEndpoints({
         }
       },
     }),
-    getSimilarFilms: build.query<BaseResponseMovie, string>({
-      query: (id) => ({
+    getSimilarFilms: build.query<BaseResponseMovie, { id: string; page: number }>({
+      query: ({ id, page }) => ({
         url: `movie/${id}/similar`,
         method: 'GET',
+        params: { page },
       }),
       transformResponse: (response: unknown) => {
         try {
@@ -49,11 +51,11 @@ export const movieApi = baseApi.injectEndpoints({
         }
       },
     }),
-    searchMovie: build.query<BaseResponseMovie, string>({
+    searchMovie: build.query<BaseResponseMovie, { query: string; page: number }>({
       query: (query) => ({
         url: 'search/movie',
         method: 'GET',
-        params: { query },
+        params: query,
       }),
       transformResponse: (response) => BaseResponseMovieSchema.parse(response),
     }),
