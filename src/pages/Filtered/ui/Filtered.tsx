@@ -12,13 +12,14 @@ export const Filtered = () => {
   const infiniteScrollRef = useRef<HTMLDivElement>(null)
 
   const debounesRaiting = useDebounceValue(raiting)
-  const { data, error, isLoading, fetchNextPage, isFetching, hasNextPage, isFetchingNextPage } =
-    useDiscoverMovieInfiniteQuery({
+  const { data, isLoading, fetchNextPage, isFetching, hasNextPage, isFetchingNextPage } = useDiscoverMovieInfiniteQuery(
+    {
       sort_by: sort,
       'vote_average.gte': debounesRaiting[0],
       'vote_average.lte': debounesRaiting[1],
       with_genres: genres.join(','),
-    })
+    }
+  )
 
   const loadMoreHandler = useCallback(() => {
     if (hasNextPage && !isFetching) {
