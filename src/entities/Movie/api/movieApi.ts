@@ -15,15 +15,10 @@ export const movieApi = baseApi.injectEndpoints({
       query: ({ category, page }) => ({ url: `movie/${category}`, params: { page: page } }),
       transformResponse: (response: unknown) => MovieListResponseSchema.parse(response),
     }),
-    getCategoryInfMovies: build.infiniteQuery<
-      MovieListResponse,
-      { category: string },
-      number
-    >({
+    getCategoryInfMovies: build.infiniteQuery<MovieListResponse, { category: string }, number>({
       infiniteQueryOptions: {
         initialPageParam: 1,
-        getNextPageParam: (lastPage) =>
-          lastPage.page < lastPage.total_pages ? lastPage.page + 1 : undefined,
+        getNextPageParam: (lastPage) => (lastPage.page < lastPage.total_pages ? lastPage.page + 1 : undefined),
       },
       query: ({ queryArg, pageParam }) => ({
         url: `movie/${queryArg.category}`,
@@ -59,11 +54,15 @@ export const movieApi = baseApi.injectEndpoints({
         }
       },
     }),
-    searchMovie: build.query<BaseResponseMovie, { query: string; page: number }>({
-      query: (query) => ({
+    searchMovie: build.infiniteQuery<BaseResponseMovie, { query: string }, number>({
+      infiniteQueryOptions: {
+        initialPageParam: 1,
+        getNextPageParam: (lastPage) => (lastPage.page < lastPage.total_pages ? lastPage.page + 1 : undefined),
+      },
+      query: ({ queryArg, pageParam }) => ({
         url: 'search/movie',
         method: 'GET',
-        params: query,
+        params: { query: queryArg.query, page: pageParam },
       }),
       transformResponse: (response) => BaseResponseMovieSchema.parse(response),
     }),
@@ -75,5 +74,5 @@ export const {
   useGetSimilarFilmsQuery,
   useGetCategoryInfMoviesInfiniteQuery,
   useGetByIdQuery,
-  useSearchMovieQuery,
+  useSearchMovieInfiniteQuery,
 } = movieApi

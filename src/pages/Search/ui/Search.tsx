@@ -1,24 +1,45 @@
-import { useSearchMovieQuery } from '@/entities/Movie'
+import { useSearchMovieInfiniteQuery } from '@/entities/Movie'
 import { SearchMovie } from '@/features/searchMovie'
 import { ListMovies, ListMovieSceleton } from '@/widgets'
 import { useSearchParams } from 'react-router-dom'
 import s from './Search.module.css'
-import { Pagination } from '@/shared/ui/Pagination'
-import { useState } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
 export const Search = () => {
   const [searchParams] = useSearchParams()
   const query = searchParams.get('query')?.trim() ?? ''
-  const [page, setPage] = useState(1)
-  const { data, isLoading } = useSearchMovieQuery({ query, page }, {
-    skip: !query,
-  })
+  const infiniteScrollRef = useRef<HTMLDivElement>(null)
+  const { data, isLoading, isFetching, isFetchingNextPage, hasNextPage, fetchNextPage } = useSearchMovieInfiniteQuery(
+    { query },
+    { skip: !query }
+  )
+
+  const items = data?.pages ?? []
+
+  const loadMoreHandler = useCallback(() => {
+    if (hasNextPage && !isFetching) {
+      void fetchNextPage()
+    }
+  }, [fetchNextPage, hasNextPage, isFetching])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0]?.isIntersecting) {
+        loadMoreHandler()
+      }
+    })
+
+    const sentinel = infiniteScrollRef.current
+    if (sentinel && hasNextPage) {
+      observer.observe(sentinel)
+    }
+
+    return () => observer.disconnect()
+  }, [hasNextPage, loadMoreHandler])
 
   if (isLoading) {
     return <ListMovieSceleton rows={5} />
   }
-
-  const items = data?.results ?? []
 
   return (
     <section id="search-page">
@@ -30,11 +51,13 @@ export const Search = () => {
           ) : !items.length ? (
             <p className={s.message}>No matches found for «{query}»</p>
           ) : (
-            <ListMovies items={items} />
+            items.map(({ page, results }) => <ListMovies key={page} items={results} />)
           )}
         </div>
+        {hasNextPage && (
+          <div ref={infiniteScrollRef}>{isFetchingNextPage ? <ListMovieSceleton rows={5} /> : <div />}</div>
+        )}
       </div>
-      <Pagination currentPage={page} setCurrentPage={setPage} pagesCount={data?.total_pages || 1} />
     </section>
   )
 }

@@ -10,14 +10,8 @@ export const Category = () => {
   const category = Object.values(Path).find(({ path }) => path === categorySlug) ?? Path.POPULAR
   const infiniteScrollRef = useRef<HTMLDivElement>(null)
 
-  const {
-    data,
-    error,
-    isLoading,
-    fetchNextPage,
-    isFetching,
-    hasNextPage,
-    isFetchingNextPage } = useGetCategoryInfMoviesInfiniteQuery({ category: category.path })
+  const { data, error, isLoading, fetchNextPage, isFetching, hasNextPage, isFetchingNextPage } =
+    useGetCategoryInfMoviesInfiniteQuery({ category: category.path })
 
   const loadMoreHandler = useCallback(() => {
     if (hasNextPage && !isFetching) {
@@ -71,9 +65,9 @@ export const Category = () => {
       </div>
       {hasNextPage && (
         <div ref={infiniteScrollRef}>
-          {isFetchingNextPage ? <ListMovieSceleton rows={5} /> : <div style={{ height: '20px' }} />}
-        </div>)}
-
+          {isFetchingNextPage ? <ListMovieSceleton rows={5} /> : <div style={{ minHeight: '20px' }} />}
+        </div>
+      )}
     </section>
   )
 }
