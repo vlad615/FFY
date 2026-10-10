@@ -10,11 +10,11 @@ type Props = {
 }
 
 export const Categories = ({ title, path }: Props) => {
-  const { data, error, isLoading } = useGetCategoryMoviesQuery(path)
+  const { data, error, isLoading } = useGetCategoryMoviesQuery({ category: path, page: 1 })
   const movies = data?.results ?? []
 
   if (isLoading) {
-    return <ListMovieSceleton rows={1} columns={6} />
+    return <ListMovieSceleton columns={6} />
   }
 
   return (

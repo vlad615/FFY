@@ -14,14 +14,14 @@
 
 .pageButton {
   padding: 4px 10px;
-  background: white;
-  border: 1px solid #aaa;
+  background: var(--bg);
+  border: 1px solid var(--border);
   border-radius: 4px;
   cursor: pointer;
 }
 
 .pageButtonActive {
-  background: #ececec;
+  background: var(--social-bg);
   cursor: default;
 }
 

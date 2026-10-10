@@ -1,13 +1,44 @@
-import { useGetCategoryMoviesQuery } from '@/entities/Movie'
+import { useGetCategoryInfMoviesInfiniteQuery } from '@/entities/Movie'
 import { CategoriesPaths as Path, Paths } from '@/shared/lib'
 import { ListMovies, ListMovieSceleton } from '@/widgets'
+import { useCallback, useEffect, useRef } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import s from './Category.module.css'
 
 export const Category = () => {
   const categorySlug = useParams().category
   const category = Object.values(Path).find(({ path }) => path === categorySlug) ?? Path.POPULAR
-  const { data, error, isLoading } = useGetCategoryMoviesQuery(category.path)
+  const infiniteScrollRef = useRef<HTMLDivElement>(null)
+
+  const {
+    data,
+    error,
+    isLoading,
+    fetchNextPage,
+    isFetching,
+    hasNextPage,
+    isFetchingNextPage } = useGetCategoryInfMoviesInfiniteQuery({ category: category.path })
+
+  const loadMoreHandler = useCallback(() => {
+    if (hasNextPage && !isFetching) {
+      void fetchNextPage()
+    }
+  }, [fetchNextPage, hasNextPage, isFetching])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0]?.isIntersecting) {
+        loadMoreHandler()
+      }
+    })
+
+    const sentinel = infiniteScrollRef.current
+    if (sentinel && hasNextPage) {
+      observer.observe(sentinel)
+    }
+
+    return () => observer.disconnect()
+  }, [hasNextPage, loadMoreHandler])
 
   if (isLoading) {
     return <ListMovieSceleton rows={5} />
@@ -35,9 +66,14 @@ export const Category = () => {
             Не удалось загрузить фильмы. Попробуйте еще раз.
           </p>
         ) : (
-          <ListMovies items={data?.results} />
+          data?.pages.map(({ page, results }) => <ListMovies key={page} items={results} />)
         )}
       </div>
+      {hasNextPage && (
+        <div ref={infiniteScrollRef}>
+          {isFetchingNextPage ? <ListMovieSceleton rows={5} /> : <div style={{ height: '20px' }} />}
+        </div>)}
+
     </section>
   )
 }

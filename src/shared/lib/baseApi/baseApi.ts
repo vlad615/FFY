@@ -11,7 +11,6 @@ export const baseApi = createApi({
         Authorization: `Bearer ${import.meta.env.VITE_API_ACCESS_KEY}`,
       },
     })(args, api, extraOptions)
-
     if (result.error) {
       handleErrors(result.error)
     }

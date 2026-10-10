@@ -12,15 +12,27 @@ import { ZodError } from 'zod'
 export const movieApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getCategoryMovies: build.query<MovieListResponse, { category: string; page: number }>({
-      query: ({ category, page }) => ({ url: `movie/${category}`, params: { page } }),
+      query: ({ category, page }) => ({ url: `movie/${category}`, params: { page: page } }),
       transformResponse: (response: unknown) => MovieListResponseSchema.parse(response),
     }),
-    getById: build.query<MovieDetails, { id: string; page: number }>({
-      query: ({ id, page }) => ({
-        url: `movie/${id}`,
-        method: 'GET',
-        params: { page },
+    getCategoryInfMovies: build.infiniteQuery<
+      MovieListResponse,
+      { category: string },
+      number
+    >({
+      infiniteQueryOptions: {
+        initialPageParam: 1,
+        getNextPageParam: (lastPage) =>
+          lastPage.page < lastPage.total_pages ? lastPage.page + 1 : undefined,
+      },
+      query: ({ queryArg, pageParam }) => ({
+        url: `movie/${queryArg.category}`,
+        params: { page: pageParam },
       }),
+      transformResponse: (response: unknown) => MovieListResponseSchema.parse(response),
+    }),
+    getById: build.query<MovieDetails, string>({
+      query: (id) => `movie/${id}`,
       transformResponse: (response: unknown) => {
         try {
           return MovieDetailsSchema.parse(response)
@@ -33,12 +45,8 @@ export const movieApi = baseApi.injectEndpoints({
         }
       },
     }),
-    getSimilarFilms: build.query<BaseResponseMovie, { id: string; page: number }>({
-      query: ({ id, page }) => ({
-        url: `movie/${id}/similar`,
-        method: 'GET',
-        params: { page },
-      }),
+    getSimilarFilms: build.query<BaseResponseMovie, string>({
+      query: (id) => `movie/${id}/similar`,
       transformResponse: (response: unknown) => {
         try {
           return BaseResponseMovieSchema.parse(response)
@@ -62,4 +70,10 @@ export const movieApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { useGetCategoryMoviesQuery, useGetSimilarFilmsQuery, useGetByIdQuery, useSearchMovieQuery } = movieApi
+export const {
+  useGetCategoryMoviesQuery,
+  useGetSimilarFilmsQuery,
+  useGetCategoryInfMoviesInfiniteQuery,
+  useGetByIdQuery,
+  useSearchMovieQuery,
+} = movieApi

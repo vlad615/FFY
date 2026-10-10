@@ -6,7 +6,7 @@ type Props = {
   columns?: number
 }
 
-export const ListMovieSceleton = ({ rows = 2, columns = 5 }: Props) => {
+export const ListMovieSceleton = ({ rows = 1, columns = 5 }: Props) => {
   const itemCount = rows * columns
 
   return (

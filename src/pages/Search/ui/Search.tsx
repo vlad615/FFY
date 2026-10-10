@@ -3,12 +3,14 @@ import { SearchMovie } from '@/features/searchMovie'
 import { ListMovies, ListMovieSceleton } from '@/widgets'
 import { useSearchParams } from 'react-router-dom'
 import s from './Search.module.css'
+import { Pagination } from '@/shared/ui/Pagination'
+import { useState } from 'react'
 
 export const Search = () => {
   const [searchParams] = useSearchParams()
   const query = searchParams.get('query')?.trim() ?? ''
-
-  const { data, isLoading } = useSearchMovieQuery(query, {
+  const [page, setPage] = useState(1)
+  const { data, isLoading } = useSearchMovieQuery({ query, page }, {
     skip: !query,
   })
 
@@ -32,6 +34,7 @@ export const Search = () => {
           )}
         </div>
       </div>
+      <Pagination currentPage={page} setCurrentPage={setPage} pagesCount={data?.total_pages || 1} />
     </section>
   )
 }
