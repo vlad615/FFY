@@ -1,5 +1,14 @@
 import { z } from 'zod'
 
+export const genreShema = z.object({
+  id: z.number(),
+  name: z.string(),
+})
+
+export const genresShema = z.object({
+  genres: genreShema.array(),
+})
+
 export const creditShema = z.object({
   adult: z.boolean(),
   gender: z.number(),
@@ -38,3 +47,5 @@ export const creditsShema = z.object({
 export type Credit = z.infer<typeof creditShema>
 export type Crew = z.infer<typeof crewShema>
 export type Credits = z.infer<typeof creditsShema>
+export type Genre = z.infer<typeof genreShema>
+export type Genres = z.infer<typeof genresShema>

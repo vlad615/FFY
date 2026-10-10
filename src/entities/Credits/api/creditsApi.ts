@@ -1,5 +1,5 @@
 import { baseApi } from '@/shared/lib'
-import { creditsShema, type Credits } from './credits.type'
+import { creditsShema, genresShema, type Credits, type Genres } from './credits.type'
 
 const creditsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -10,7 +10,11 @@ const creditsApi = baseApi.injectEndpoints({
       }),
       transformResponse: (response: unknown) => creditsShema.parse(response),
     }),
+    getGenres: build.query<Genres, void>({
+      query: () => 'genre/movie/list',
+      transformResponse: (response: unknown) => genresShema.parse(response),
+    }),
   }),
 })
 
-export const { useGetCreditsQuery } = creditsApi
+export const { useGetCreditsQuery, useGetGenresQuery } = creditsApi

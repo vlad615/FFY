@@ -1,0 +1,64 @@
+.dualRange {
+  position: relative;
+  width: 100%;
+  height: 40px;
+}
+
+.dualRangeTrack,
+.dualRangeProgress {
+  position: absolute;
+  bottom: 0;
+  height: 4px;
+  border-radius: 2px;
+}
+
+.dualRangeTrack {
+  left: 0;
+  right: 0;
+  background: #e5e7eb;
+}
+
+.dualRangeProgress {
+  background: #3b82f6;
+}
+
+.dualRangeInput {
+  position: absolute;
+  bottom: 2%;
+  width: 100%;
+  height: 0;
+  margin: 0;
+  background: none;
+  pointer-events: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.dualRangeInput::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  pointer-events: auto;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid #3b82f6;
+  cursor: pointer;
+}
+
+.dualRangeInput::-moz-range-thumb {
+  pointer-events: auto;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--border);
+  border: 2px solid #3b82f6;
+  cursor: pointer;
+}
+
+.dualRangeValues {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-h);
+  font-size: 0.9rem;
+  font-weight: 600;
+}

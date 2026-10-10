@@ -1,0 +1,11 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+  gap: 10px;
+}
+
+.cardWrapper {
+  display: grid;
+  grid-template-columns: repeat(var(--movie-grid-columns, 4), minmax(0, 1fr));
+  gap: 24px;
+}

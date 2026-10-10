@@ -12,6 +12,7 @@ import { Route, Routes } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import '../../index.css'
 import s from './App.module.css'
+import { Filtered } from '@/pages/Filtered'
 
 export function App() {
   const isLoading = useGlobalLoading()
@@ -25,6 +26,7 @@ export function App() {
         <Route path={MenuPaths.MAIN.path} element={<Main />} />
         <Route path={MenuPaths.SEARCH.path} element={<Search />} />
         <Route path={MenuPaths.FAVORITES.path} element={<Favorites />} />
+        <Route path={MenuPaths.FILTERED.path} element={<Filtered />} />
         <Route path={Paths.MOVIES.path + '/:category'} element={<Category />} />
         <Route path={Paths.MOVIE.path + '/:id'} element={<DetailsMovie />} />
 

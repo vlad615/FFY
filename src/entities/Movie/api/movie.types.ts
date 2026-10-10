@@ -77,6 +77,23 @@ export const ResponseMovieSchema = BaseResponseMovieSchema.extend({
   }),
 })
 
+export type sort =
+  | 'popularity.desc'
+  | 'popularity.asc'
+  | 'primary_release_date.desc'
+  | 'primary_release_date.asc'
+  | 'title.asc'
+  | 'title.desc'
+  | 'vote_average.asc'
+  | 'vote_average.desc'
+
+export type FilterTypes = {
+  sort_by: sort
+  'vote_average.gte': number
+  'vote_average.lte': number
+  with_genres: string
+}
+
 export const MovieListResponseSchema = z.union([ResponseMovieSchema, BaseResponseMovieSchema])
 
 export type MovieListResponse = z.infer<typeof MovieListResponseSchema>

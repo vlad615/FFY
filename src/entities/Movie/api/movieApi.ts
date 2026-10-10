@@ -4,6 +4,7 @@ import {
   MovieDetailsSchema,
   MovieListResponseSchema,
   type BaseResponseMovie,
+  type FilterTypes,
   type MovieDetails,
   type MovieListResponse,
 } from './movie.types'
@@ -66,6 +67,18 @@ export const movieApi = baseApi.injectEndpoints({
       }),
       transformResponse: (response) => BaseResponseMovieSchema.parse(response),
     }),
+    discoverMovie: build.infiniteQuery<BaseResponseMovie, FilterTypes, number>({
+      infiniteQueryOptions: {
+        initialPageParam: 1,
+        getNextPageParam: (lastPage) => (lastPage.page < lastPage.total_pages ? lastPage.page + 1 : undefined),
+      },
+      query: ({ queryArg, pageParam }) => ({
+        url: 'discover/movie',
+        method: 'GET',
+        params: { ...queryArg, page: pageParam },
+      }),
+      transformResponse: (response) => BaseResponseMovieSchema.parse(response),
+    }),
   }),
 })
 
@@ -75,4 +88,5 @@ export const {
   useGetCategoryInfMoviesInfiniteQuery,
   useGetByIdQuery,
   useSearchMovieInfiniteQuery,
+  useDiscoverMovieInfiniteQuery,
 } = movieApi
